@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل" />
+    <title>{{title_tag}}</title>
+    <meta name="description" content="يمكنكم مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين " />
+    <meta itemprop="name" content="{{title_tag}}">
+    <meta property="og:title" content="{{title_tag}} ">
+    <meta property="og:url" content="https://{{domain}}{{request.path}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{title_tag}} ">
+    <meta name="twitter:description" content="يمكنكم مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين ">
+</head>
+<body>
+{% load crispy_forms_tags %}
+    
+    
+    <div class='my-container'>
+        {% for mes in messages %}
+            <div class="my-form-message">
+                {{mes}}
+            </div>
+        {% endfor %}
+        <div class="my-form-container ">
+            <div class="nav-login">
+                <h4 class="">{{title}}</h4>
+            </div>
+            <form action="" method="post" class='my-form border-bottom '>
+                {% csrf_token %}
+                {% if error != None %}
+                    <div class="error">{{error}}</div>
+                {% endif %}
+                <div id="div_id_password1" class="form-group"> 
+                    <label for="id_password1" class=" requiredField">
+                        كلمة المرور <span class="asteriskField"></span> </label> 
+                        <div class=""> 
+                            <input type="password" name="password1" minlength="8" class="textinput textInput form-control" value='' maxlength="30" required id="id_password1">
+                        </div> 
+                </div> 
+                
+                
+                <div id="div_id_password2" class="form-group"> 
+                    <label for="id_password2" class=" requiredField">
+                    تأكيد كلمة المرور <span class="asteriskField"></span> </label> 
+                    <div class=""> 
+                        <input type="password" name="password2" minlength="8" class="textinput textInput form-control" value='' maxlength="30" required id="id_password2">
+                        <small id="hint_id_username" class="form-text text-muted">كلمة المرور يجب ألا تكون كلها أرقام</small> 
+                    </div>
+                     <small id="hint_id_username" class="form-text text-muted">كلمة المرور يجب ألا يحتوي على مسافات</small> 
+                 </div>
+                <div class="my-form-div">
+                <input type="submit" value="save" class="my-form-btn-login">
+                
+                </div>
+            </form>
+        </div>
+        {% if page == 'login' %}
+            <div class="my-form-message">
+                <a href="{% url 'reset_password' %}">نسيت كلمة السر؟</a>
+            </div>
+            
+            <div class="my-form-message">
+                إذا لم يكن لديك حساب فقم ب  <a href="{% url 'register' %}">إنشاء حساب</a>
+            </div>
+        {% endif %}
+    </div>
+
+    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>
+    

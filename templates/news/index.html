@@ -1,0 +1,88 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block head %}
+    <meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل" />
+
+    <title>مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين</title>
+    <meta name="description" content="يمكنكم مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين " />
+    <meta itemprop="name" content="مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين">
+    <meta property="og:title" content="مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين">
+    <meta property="og:url" content="https://{{domain}}{{request.path}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين">
+    <meta name="twitter:description" content="يمكنكم مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين ">
+{% endblock head %}
+
+
+{% block content %}
+    <main>
+        <section class="container" >
+
+            <h3 class="title"><span class="title-word">
+                <i class="fas fa-video"></i>
+                آخر 
+            </span>الحلقات المضافة</h3>
+
+            <div class="items">
+                {% for episode in episodes %}
+                <div class="item-card" onclick="GoToLink(this)" link="{% url 'watch' name=episode.name.url_anime typ=episode.name.anime_type.type_url episode=episode.episode %}">
+                    <div class="conatainer-img-card"><img src="{{episode.name.image_anime.url}}" draggable="false" class="image-card" alt=""></div>
+                    <div class="hover">
+                        <div class="right-data">
+                            <a href="{% url 'watch' name=episode.name.url_anime typ=episode.name.anime_type.type_url episode=episode.episode %}" class="item-right-data episode-data">
+                                <i class="fas fa-eye"></i>
+                                {{episode.count_watching}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="description-card">
+                        <div class="subtitle"><a href="{% url 'watch' name=episode.name.url_anime typ=episode.name.anime_type.type_url episode=episode.episode %}">{{episode.name.name}}</a></div>
+                        <div class="subtitle2"><a href="{% url 'watch' name=episode.name.url_anime typ=episode.name.anime_type.type_url episode=episode.episode %}">{{episode.episode}}</a></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+
+            <h3 class="title"><span class="title-word">
+                <i class="fas fa-list"></i>
+                آخر 
+            </span>الأنميات المضافة</h3>
+
+            <div class="items">
+                {% for i in animes_search %}
+                <div class="item-card" onclick='GoToLink()' link="{% url 'anime' slug=i.url_anime %}" >
+                    <div class="conatainer-img-card"><img src="{{i.image_anime.url}}" draggable="false" class="image-card" alt=""></div>
+                    <div class="hover">
+                        <div class="right-data">
+                            <a href="" class="item-right-data episode-data">
+                                <i class="fas fa-heart"></i>
+                                {{i.fav_count}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="description-card">
+                        <div class="subtitle"><a href="#">{{i.name}}</a></div>
+                        <div class="subtitle2"><a href="#">{{i.anime_date}}</a></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </section>
+    </main>
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script>
+    media()
+    window.onresize = (e) => media()
+</script>
+{% endblock script %}

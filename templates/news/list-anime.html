@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_tags %}
+
+{% block head %}
+    <meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل" />
+
+    <title>{{urlpath}}</title>
+    <meta name="description" content="يمكنكم مشاهدة قائمة افلام و انميات {{urlpath}} مترجمة اون لاين" />
+    <meta itemprop="name" content="{{urlpath}}">
+    <meta property="og:title" content="{{urlpath}}">
+    <meta property="og:url" content="https://{{domain}}{{request.path}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{urlpath}}">
+    <meta name="twitter:description" content="يمكنكم مشاهدة قائمة افلام و انميات {{urlpath}} مترجمة اون لاين">
+
+{% endblock head %}
+
+
+{% block content %}
+    <main>
+        <form action="" method="get">
+            <div class="filter">
+                <div class="list-options cen-flex">
+                    <div class="item-option" id="sort_by">
+                        <select name="sort_by" id="">
+                            {% if def_sort_by == 'publish_date' %}
+                            <option selected value="publish_date">أخر الاضافات</option>
+                            <option value="name">الاسم</option>
+                            <option value="anime_date">تاريخ الانتاج</option>
+                            {% elif def_sort_by == 'name' %}
+                            <option  value="publish_date">أخر الاضافات</option>
+                            <option selected value="name">الاسم</option>
+                            <option value="anime_date">تاريخ الانتاج</option>
+                            {% else %}
+                            <option  value="publish_date">أخر الاضافات</option>
+                            <option value="name">الاسم</option>
+                            <option selected value="anime_date">تاريخ الانتاج</option>
+                            {% endif %}
+                        </select>
+                        <div class="button-select" aria-selected="true" onclick="ShowDropDown('dropdown-sort-options')" aria-type="select-signle">
+                        </div>
+                        <ul class="list-dropdown ds-none" id="dropdown-sort-options">
+                        </ul>
+                    </div>
+    
+                    <div class="item-option" id="sort_sys">
+                        <select name="sort_sys" id="">
+                            {% if def_sort_sys == '-' %}
+                            <option selected value="-">تنازلي</option>
+                            <option value="+">تصاعدي</option>
+                            {% else %}
+                            <option value="-">تنازلي</option>
+                            <option selected value="+">تصاعدي</option>
+                            {% endif %}
+                        </select>
+
+                        <div class="button-select" onclick="ShowDropDown('dropdown-align-options')">
+                        </div>
+                        <ul class="list-dropdown ds-none" id="dropdown-align-options">
+                        </ul>
+                    </div>
+                </div>
+                
+                <ul class="unstyled centered">
+                    {% for i in anime_state %}
+                    <li>
+                        {% if i.name in state %}
+                        <input checked class="styled-checkbox" id="{{i.name}}" type="checkbox" value="{{i.name}}" name="state" >
+                        {% else %}
+                        <input class="styled-checkbox" id="{{i.name}}" type="checkbox" value="{{i.name}}" name="state" >
+                        {% endif %}
+                        <label for="{{i.name}}">{{i.name}}</label>
+                    </li>
+                    {% endfor %}
+                  </ul>
+    
+                <input type="text" name="s" id="name" placeholder="اسم الانمي" class="field-input input-number">
+    
+                <div class="field-input" id='select-genres-multi'>
+                    <select name="genres" id="" multiple>
+                    {% for i in anime_class %}
+                    {% if i.name in genres %}
+                    <option selected value="">{{i.name}}</option>
+                    {% else %}
+                    <option value="">{{i.name}} - {{genres}}</option>
+                    {% endif %}
+                    {% endfor %}
+                    </select>
+                </div>
+        
+                <div class="field-input"id='select-seasons-multi'>
+                    <select name="seasons" id='seasons' multiple>
+                        {% for i in anime_date %}
+                        {% if i.name|str in seasons %}
+                        <option selected value="">{{i.name}}</option>
+                        {% else %}
+                        <option value="">{{i.name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+    
+                <div class="field-input" id='select-types-multi'>
+                    <select name="types" id="types" multiple>
+                        {% for i in anime_type %}
+                        {% if i.name in types %}
+                        <option selected value="">{{i.name}}</option>
+                        {% else %}
+                        <option value="">{{i.name}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="cen-flex"><button class="field-button">فلترة</button></div>
+            </div>
+        </form>
+        
+        <section class="container" >
+            <h3 class="title"><span class="title-word">
+                <i class="fas fa-list"></i>
+                قائمة 
+            </span> الأنمي</h3>
+
+            <div class="items">
+                {% for i in page %}
+                <div class="item-card" onclick='GoToLink(this)' link="{% url 'anime' slug=i.url_anime %}" >
+                    <div class="conatainer-img-card"><img src="{{i.image_anime.url}}" draggable="false" class="image-card" alt=""></div>
+                    <div class="hover">
+                        <div class="right-data">
+                            <a href="" class="item-right-data episode-data">
+                                <i class="fas fa-heart"></i>
+                                {{i.fav_count}}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="description-card">
+                        <div class="subtitle"><a href="#">{{i.name}}</a></div>
+                        <div class="subtitle2"><a href="#">{{i.anime_date}}</a></div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+            {% if page.paginator.num_pages > 1 %}
+            <div class="b-pagination-outer" >
+                <ul id="border-pagination">
+                {% if page.has_previous %}
+                    <li><a class="a-link fast-ft" href="?{{get}}page={{page.previous_page_number}}">&laquo;&nbsp;</a></li>
+                {% else %}
+                    <li><span class="fast-ft disabled">&laquo;&nbsp;</span></li>
+                {% endif %}
+
+                {% for i in page.range %}
+                    {% if i == page.number %}
+                        <li><span class="active fast-ft">{{i}}</span></li>
+                    {% else %}
+                        <li><a class="a-link fast-ft" href="?{{get}}page={{i}}">{{i}}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page.number != page.paginator.num_pages %}
+                    <li><a class="a-link fast-ft" href="?{{get}}page={{page.paginator.num_pages}}">الأخيرة</a></li>
+                {% endif %}
+
+                {% if page.has_next %}
+                    <li><a class="a-link fast-ft" href="?{{get}}page={{page.next_page_number}}">&nbsp;&raquo;</a></li>
+                {% else %}
+                    <li><span class="fast-ft disabled" >&nbsp;&raquo;</a></li>
+                {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+    
+{% endblock content %}
+   
+{% block script %}
+    <script src="{% static 'js/select.js' %}"></script>
+    <script>
+        genres = new multiSelect('select-genres-multi', title='تصنيفات الانمي')
+        seasons = new multiSelect('select-seasons-multi', title='مواسم الانمي')
+        types = new multiSelect('select-types-multi', title='أنواع الانمي')
+        sort_by = new SelectSingle('sort_by', auto_value=false) ;
+        sort_sys = new SelectSingle('sort_sys', auto_value=false) ;
+        
+        media()
+        window.onresize = (e) => media()
+    </script>
+{% endblock script %}
+

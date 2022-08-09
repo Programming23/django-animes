@@ -1,0 +1,270 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{% static 'js/fonts.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/fontsaws.css' %}">
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/colors.css' %}">
+    <link rel="stylesheet" href="{% static 'css/select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/StudioKonKon/bootstrap-konkon@1.4.1-beta/dist/css/studio-konkon.min.css">
+    <style>
+        body {
+            font-size: 0.875rem;
+          }
+          
+          .comment-img {
+            width: 3rem;
+            height: 3rem;
+          }
+          .comment-replies .comment-img {
+            width: 1.75rem;
+            height: 1.75rem;
+          }
+          
+          .form-control {
+            background-color: rgba(255, 255, 255, 0.05);
+          }
+          
+          /* ----- testing ----- */
+          .app-menu .btn {
+            width: 2.5rem;
+            height: 2.5rem;
+            padding: 0;
+            font-size: 1.5rem;
+          }     
+          .ds-none{
+            display: none;
+          }
+    </style>
+</head>
+
+<body class="bg-light text-dark">
+
+    <div class="app container py-4">
+       <div class="col-md-10 col-lg-8 m-auto">
+          <form method='post'>
+            {% csrf_token %}
+            <div class="bg-white rounded-3 shadow-sm p-4 mb-4">
+                <!-- New Comment //-->
+                <div class="d-flex">
+                   <img class="rounded-circle me-3"
+                        style="width:3rem;height:3rem;"
+                        src="https://via.placeholder.com/128/fe669e/ffcbde.png?text=S" />
+                   <div class="flex-grow-1">
+                      <div class="hstack gap-2 mb-1">
+                         <a href="#" class="fw-bold link-dark">{{request.user.username}}</a>
+                      </div>
+                      {% if not request.user.is_authenticated %}
+                      Not
+                      {% endif %}
+                      <div class="form-floating mb-3">
+                         <textarea class="form-control w-100"
+                                   placeholder="Leave a comment here"
+                                   id="my-comment"
+                                   name='content'
+                                   style="height:7rem;"></textarea>
+                         <label for="my-comment">Leave a comment here</label>
+                      </div>
+                      <div class="hstack justify-content-end gap-2">
+                         <button class="btn btn-sm btn-primary text-uppercase">comment</button>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </form>
+          <div class="bg-white rounded-3 shadow-sm p-4">
+ 
+             <h4 class="mb-4" ><span id='count-comments'>{{comments.count}}</span> Comments</h4>
+ 
+             <!-- Comment #1 //-->
+             <div class="">
+                {% for comment in comments %}
+                <div class="py-3" id="Comment-{{comment.pk}}">
+                    <div class="d-flex comment" >
+                       <img class="rounded-circle comment-img"
+                            src="https://via.placeholder.com/128/fe669e/ffcbde.png?text=S" />
+                       <div class="flex-grow-1 ms-3">
+                          <div class="mb-1"><a href="#" class="fw-bold link-dark me-1">{{comment.user.user.username}}</a> <span class="text-muted text-nowrap">2 days ago</span></div>
+                          <div class="mb-2">{{comment.content}}</div>
+                          <div class="hstack align-items-center mb-2">
+                             <a class="link-primary me-2" href="#"><i class="zmdi zmdi-thumb-up"></i></a>
+                             <span class="me-3 small">{{comment.children.count}}</span>
+                             <a class="link-secondary me-4" href="#"><i class="zmdi zmdi-thumb-down"></i></a>
+                             <a class="link-secondary small" href="#">REPLY</a>
+                          </div>
+                          <span style="color:#4285f4;cursor:pointer" class="fw-bold d-flex align-items-center" onclick="repliesToggle(this, '#replies-{{comment.pk}}')" >
+                             <i class="fas fa-caret-up fs-4 me-3"></i>
+                             <span>Show Replies</span>
+                          </span>
+                       </div>
+                    </div>
+                    <div class="comment-replies mt-4 bg-dark p-3 rounded ds-none" id="replies-{{comment.pk}}"
+                         style="--bs-bg-opacity:.025;">
+                         <form method='post'>
+                            {% csrf_token %}
+                            <input name='parent' id='comment-parent-{{comment.pk}}' value='{{comment.pk}}' class='ds-none'>
+                            <input name='reply' id='comment-reply-{{comment.pk}}' value='{{comment.pk}}' class='ds-none'>
+                            <div class="d-flex py-2">
+                                <img class="rounded-circle comment-img" src="https://via.placeholder.com/128/fe669e/ffcbde.png?text=S">
+                                <div class="flex-grow-1 ms-3">
+                                   <div class="mb-1">
+                                      <div><a href="#" class="fw-bold link-dark">{{request.user.username}}</a></div>
+                                      <div class="text-muted small">Replying to @{{comment.user.user.username}}</div>
+                                   </div>
+                                   <div class="form-floating mb-2">
+                                      <textarea class="form-control w-100" placeholder="Leave a comment here" id="my-comment-reply" style="height:7rem;" name='content'></textarea>
+                                      <label for="my-comment-reply">Leave a comment here</label>
+                                   </div>
+                                   <div class="hstack justify-content-end gap-2">
+                                      <button name='save-comment' class="btn btn-sm btn-primary text-uppercase">comment</button>
+                                   </div>
+                                </div>
+                             </div>
+                         </form>
+                       {% for reply in comment.children %}
+                       <div class="d-flex py-2" id="Comment-{{reply.pk}}">
+                        <img class="rounded-circle comment-img"
+                             src="https://via.placeholder.com/128/ff99cc/fe669e.png?text=K" />
+                        <div class="flex-grow-1 ms-3">
+                           <div class="mb-1"><a href="#" class="ffw-bold link-dark me-1">{{reply.user.user.username}}</a> <span class="text-muted text-nowrap">just now</span></div>
+                           <div class="mb-2"><a href="#Comment-{{reply.reply.pk}}">@{{reply.reply.user.user.username}}</a> {{reply.content}}</div>
+                           <div class="hstack align-items-center">
+                              <a class="link-secondary me-2" href="#"><i class="zmdi zmdi-thumb-up"></i></a>
+                              <span class="me-3 small">2</span>
+                              <a class="link-secondary me-4" href="#"><i class="zmdi zmdi-thumb-down"></i></a>
+                              <a class="link-secondary small" href="#">REPLY</a>
+                           </div>
+                        </div>
+                     </div>
+                       {% endfor %}
+                    </div>
+                 </div>
+                {% endfor %}
+             </div>
+          </div>
+       </div>
+    </div>
+ 
+    <!-- Testing //-->
+    <div class="app-menu position-fixed bg-white shadow-sm border rounded p-2 vstack gap-2"
+         style="bottom:15px;right:15px;">
+       <button class="app-dl-mode btn btn-primary d-flex align-items-center justify-content-center"><i class="zmdi zmdi-sun"></i></button>
+    </div>
+ 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+
+    function deleteComment(selector, pk, parent=false){
+        url = document.location.origin
+        $.ajax({
+            url: url,
+            type: "DELETE",
+            headers: {
+              "pk": pk,
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            success: (data) => {
+              document.querySelector(selector).remove()
+              if (parent == true){
+                var count_comments = document.querySelector('#count-comments')
+                count_comments.textContent = parseInt(count_comments.textContent)-1
+              }
+            },
+          });
+    }
+</script>
+<script>
+"use strict";
+
+/* Note: Dark mode / High Contrast hurts my eye's and causes discomfort, migraines as well as blurred vision. Unfortunetly, due to this, I can't test this mode properly. If anyone plans to use this, this is just a visual example and you should make your own changes. */
+
+//
+// For development use only
+//
+
+function repliesToggle(ele, selector){
+    var rp = document.querySelector(selector)
+    if (rp.classList.contains('ds-none')){
+      rp.classList.remove('ds-none')
+      ele.children[1].textContent = 'Show Replies'
+      ele.children[0].classList = 'fas fa-caret-up fs-4 me-3'
+    }else{
+      rp.classList.add('ds-none')
+      ele.children[1].textContent = 'Hide Replies'
+      ele.children[0].classList = 'fas fa-caret-down fs-4 me-3'
+    }
+}
+
+(function() {
+   
+   var isLight = 1;
+   
+   var mapContrast = [];
+   
+   // backgrounds
+   document.querySelectorAll(".bg-white").forEach(function(item) {
+      mapContrast.push(["bg-white", "bg-dark", item]);
+   });
+   
+   document.querySelectorAll(".bg-dark").forEach(function(item) {
+      mapContrast.push(["bg-dark", "bg-white", item]);
+   });
+   
+   document.querySelectorAll(".bg-light").forEach(function(item) {
+      mapContrast.push(["bg-light", "bg-black", item]);
+   });
+   
+   // text
+   document.querySelectorAll(".text-dark").forEach(function(item) {
+      mapContrast.push(["text-dark", "text-white", item]);
+   });
+   
+   document.querySelectorAll(".text-white").forEach(function(item) {
+      mapContrast.push(["text-white", "text-dark", item]);
+   });
+   
+   // links
+   document.querySelectorAll(".link-dark").forEach(function(item) {
+      mapContrast.push(["link-dark", "link-light", item]);
+   });
+   
+   document.querySelectorAll(".link-light").forEach(function(item) {
+      mapContrast.push(["link-dark", "link-light", item]);
+   });
+   
+   
+   document.querySelector(".app-dl-mode").addEventListener("click", function() {
+      isLight = isLight ? 0 : 1;
+      
+      mapContrast.forEach(function(item) {
+         item[2].classList.remove(item[isLight]);
+         item[2].classList.add(item[isLight ? 0 : 1]);
+      });
+   }, false);
+   
+})();
+</script>
+</body>
+</html>

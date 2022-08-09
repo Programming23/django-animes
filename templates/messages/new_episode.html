@@ -1,0 +1,11 @@
+
+
+<div style="direction: rtl;">
+    <pre>
+    مرحبا {{username}} 
+    
+    لقد نزلت الحلقة {{episode.episode}} من أنمك المفضل {{name}} على موقعنا
+    
+    رابط الحلقة : <a href="{% url 'watch' name=episode.name.url_anime typ=episode.name.anime_type.type_url episode=episode.episode  %}/" style="direction: ltr;">http://{{domain}}/anime/episode/{{url}}/</a>
+    </pre>
+</div>

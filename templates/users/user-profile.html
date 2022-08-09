@@ -1,0 +1,151 @@
+
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل" />
+
+    <title>{{title_tag}}</title>
+    <meta name="description" content="يمكنكم مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين" />
+    <meta itemprop="name" content="{{title_tag}}">
+    <meta property="og:title" content="{{title_tag}}">
+    <meta property="og:url" content="https://{{domain}}{{request.path}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{title_tag}}">
+    <meta name="twitter:description" content="يمكنكم مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين">
+    <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css" />
+    <link rel="stylesheet" href="{% static 'css/users.css' %}">
+<style>
+.favorite{color:#f16464 !important}
+
+.profile-image, .profile-image img{
+    width: 19rem;
+    height: 19rem;
+    margin-right: calc(50% - 9.5rem) !important; 
+    border: 1px solid #5aa5b9;
+    border-radius: 50%;
+}
+.anime-container-infos{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 2px;
+    padding: 3rem 18rem !important;
+}
+.dev__social{
+    display: flex;
+    column-gap: 15px;
+    justify-content: center;
+    margin-top: 8px; 
+}
+.profile-user-name{
+    font-size: 25px;
+    display: flex;
+    justify-content: center; 
+}
+.btn-center{
+    width: 10rem;
+    margin-right: calc(50% - 5rem);
+}
+</style>
+{% endblock head %}
+
+{% block content %}
+
+<div class="second-section" >
+<div class="container mt-5" >
+  <div class="row mb-5" >
+    <div class="col-sm-12 col-md-5  col-lg-5" >
+      <div class="anime-container-infos">
+      {% if page == 'account' %}
+      <a class="tag tag--pill tag--main settings__btn" href="{% url 'edit_profile' %}">
+            <button class='btn btn-center' style='margin-bottom: 10px; font-family: Cairo, sans-serif;'>
+                
+                <i class="im im-edit" style='font-size: 15px;'></i>
+                تعديل
+            </button></a>
+        {% endif %}
+        
+        <div class="profile-image">
+            <img src="{{user.profile_image.url}}" draggable='false' />
+        </div>
+
+         <h1 class="profile-user-name " style="" >{{user.user.username}}</h1>
+        
+       
+            <ul class="dev__social">
+
+                {% if user.social_github %}
+                    <li>
+                        <a title="Github" href="{{user.social_github}}" target="_blank"><i
+                                class="im im-github"></i></a>
+                    </li>
+                {% endif %}            
+                
+                
+
+
+                {% if user.social_twitter %}
+                    <li>
+                        <a title="Twitter" href="{{user.social_twitter}}" target="_blank"><i
+                                class="im im-twitter"></i></a>
+                    </li>
+                {% endif %}
+                
+                
+
+                {% if user.social_instagram %}
+                    <li>
+                        <a title="instagram" href="{{user.social_instagram}}" target="_blank"><i
+                                class="im im-instagram"></i></a>
+                    </li>
+                {% endif %}
+                
+                
+
+                {% if user.social_website %}
+                    <li>
+                        <a title="Personal Website" href="{{user.social_website}}" target="_blank"><i
+                                class="im im-globe"></i></a>
+                    </li>
+                {% endif %}
+                 
+
+               
+                
+
+        </ul>
+            
+    </div>
+    </div>
+    <div class="col-sm-12 col-md-7  col-lg-7">
+      <div class="anime-container-data">
+          <div><h1 class="anime-details-title" style="direction:ltr; text-align: right;" >عني</h1></div>
+            <p class="anime-story">{% if user.bio == '' %}لا يوجد{% else %}{{user.bio}}{% endif %}</p>  
+            <div><h1 class="anime-details-title" style="direction:ltr; text-align: right;" >أخرى</h1></div>
+           <a href="{% url 'account_animes' username=user.user.username inf='الأنميات-المفضلة' %}"> <h2 class="anime-details-title">الأنميات المفضلة</h2></a>
+           <a href="{% url 'account_animes' username=user.user.username inf='تم-مشاهدتها' %}"> <h2 class="anime-details-title">أنميات تم مشاهدتها</h2></a>
+           <a href="{% url 'account_animes' username=user.user.username inf='أرغب-بمشاهدتها' %}"> <h2 class="anime-details-title">أنميات أرغب بمشاهدتها</h2></a>
+      </div>
+  </div>
+  
+</div>
+</div>
+
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+{% block script %}
+
+
+
+{% endblock script %}
+

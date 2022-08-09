@@ -1,0 +1,78 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل"
+/>
+
+<title>انمي {{episode.name.name|title}} {{episode.name.anime_type.type}} {{episode.episode}} مترجمة اون لاين</title>
+<meta name="description" content="{{episode.name.story}}" />
+<meta itemprop="name" content="انمي {{episode.name.name|title}} {{episode.name.anime_type.type}} {{episode.episode}} مترجمة اون لاين">
+<meta property="og:title" content="انمي {{episode.name.name|title}} {{episode.name.anime_type.type}} {{episode.episode}} مترجمة اون لاين">
+<meta property="og:url" content="https://{{domain}}{{request.path}}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="انمي {{episode.name.name|title}} {{episode.name.anime_type.type}} {{episode.episode}} مترجمة اون لاين">
+<meta name="twitter:description" content="{{episode.name.story}}"> {% endblock head%} {% block content %}
+<div class="">
+    <div class="row mb-5" style="padding:0 25px; margin-top: 45px;">
+        <div class="header-episode">
+            <div class="title-header cen-flex">سيرفرات المشاهدة</div>
+            <div class="servers-episode">
+                {% for server in servers %} 
+                {% if server.lien == servers.first.lien %}
+                <div class="server-episode  activate-server" data="{{server.lien}}" onclick="clk_server(this)">{{server.name}}</div>
+                {% else %}
+                <div class="server-episode" data="{{server.lien}}" onclick="clk_server(this)">{{server.name}}</div>
+                {% endif %} 
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="content-episode">
+            <div class="episode-video">
+                <iframe class='vd' src="{{servers.first.lien}}" frameborder="0" allowfullscreen="" data-ioarzrhplp-handled="1"></iframe>
+            </div>
+            <div class="episodes">
+                <div class="inputEpisodes">
+                    <input type="text" onkeyup="EpisodesSearch()" class="inputEpisodeProfile" id="inputEpisodeProfile" placeholder="البحث عن حلقة" />
+                </div>
+                <div class="numbers-eps">
+                    {% for i in episodes %}
+                    <a id="{{i.episode}}" href="{% url 'watch' name=i.name.url_anime typ=i.name.anime_type.type_url episode=i.episode %}" class="anime-eps_number cen-flex a-hover">{{i.name.anime_type.type}}&nbsp;<span class="nmb">{{i.episode}}</span></a>              
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="ft-video">
+
+            {% if prv_hide != 'hide' %}
+            <a href="{% url 'watch' name=prv_hide.name.url_anime typ=prv_hide.name.anime_type.type_url episode=prv_hide.episode  %}" class="a-link">الحلقة السابقة</a> {% else %}
+            <span class="a-link" style="color: #5c5959;">الحلقة السابقة</span> {% endif %}
+            <span class="a-link" style="color: #747171;">{{episode.count_watching}} مشاهدة</span> {% if next_hide != 'hide' %}
+            <a href="{% url 'watch' name=next_hide.name.url_anime typ=next_hide.name.anime_type.type_url episode=next_hide.episode  %}" class="a-link">الحلقة التالية</a> {% else %}
+            <span class="a-link" style="color: #5c5959;">الحلقة التالية</span> {% endif %}
+
+        </footer>
+
+        <div class="header-episode"  style='margin-top: 25px;'>
+            <div class="title-header cen-flex">سيرفرات التحميل</div>
+            <div class="servers-episode">
+                {% for dow in dows %}
+                <div class="server-episode"><a target='_blank' href='{{dow.lien}}'>{{dow.name}}</a></div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-sm-12 adds" style="width: 100%;">
+            <div class="col-sm-12 anime-name-2">انمي {{episode.name.name|title}} {{episode.name.anime_type.type}} {{episode.episode}} مترجمة اون لاين .</div>
+            <div class="col-sm-12 anime-story" id="story">{{episode.name.story}}</div>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock content %} {% block script %}
+<script>
+    wstory()
+</script>
+{% endblock script %}

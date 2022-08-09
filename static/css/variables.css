@@ -1,0 +1,18 @@
+
+
+:root{
+    --widthCard: 200px;
+    --heightImage: 260px;
+    --PaddingItems: 40px 20px;
+
+    --bgNavbar: #121619;
+    --textColor1: white;
+    --Cairo: 'Cairo', sans-serif;
+    --BgNavBarMes: #0c85c7;
+
+    /* Light */
+    --bgNavbarLight: #fff;
+    --textColorLight: black;
+    --BgNavBarMesLight: #e84a5f;
+}
+

@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="{% static 'js/fonts.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/fontsaws.css' %}">
+    <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/colors.css' %}">
+    <link rel="stylesheet" href="{% static 'css/select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/media.css' %}">
+
+
+    {% block head %}
+
+    {% endblock head %}
+{% comment %} <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3802261293654056"
+     crossorigin="anonymous"></script> {% endcomment %}
+</head>
+<body id="body">
+    {% include 'part/navbar.html' %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+
+    {% include 'part/footer.html' %}
+
+
+<script src="{% static 'js/main.js' %}"></script>
+{% block script %}
+
+
+{% endblock script %}
+</body>
+</html>

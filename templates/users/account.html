@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css" />
+    <link rel="stylesheet" href="{% static 'css/uikit.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل" />
+    <title>سجل دخولك لمشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين </title>
+    <meta name="description" content="يمكنكم مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين " />
+    <meta itemprop="name" content="سجل دخولك لمشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين ">
+    <meta property="og:title" content="سجل دخولك لمشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين ">
+    <meta property="og:url" content="https://{{domain}}{{request.path}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="سجل دخولك لمشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين ">
+    <meta name="twitter:description" content="يمكنكم مشاهدة احدث حلقات و أفلام الانمي مترجمة اون لاين ">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
+    </style>
+</head>
+<body>
+
+<!-- Main Section -->
+<main class="settingsPage profile my-md">
+  <div class="container">
+    <div class="layout">
+      <div class="column column--1of3">
+        <div class="card text-center">
+          <div class="card__body dev">
+            <a class="tag tag--pill tag--main settings__btn" href=""><i class="im im-edit"></i>
+              Edit</a>
+            <img class="avatar avatar--xl dev__avatar" src="{{profile.imageURL}}" />
+            <h2 class="dev__name">{{profile.name}}</h2>
+            <p class="dev__title">{{profile.short_into}}</p>
+            <p class="dev__location">Based in {{profile.location}}</p>
+
+            <ul class="dev__social">
+              {% if profile.social_github %}
+              <li>
+                <a title="Github" href="{{profile.social_github}}" target="_blank"><i class="im im-github"></i></a>
+              </li>
+              {% endif %}
+
+
+              {% if profile.social_twitter %}
+              <li>
+                <a title="Twitter" href="{{profile.social_twitter}}" target="_blank"><i class="im im-twitter"></i></a>
+              </li>
+              {% endif %}
+
+              {% if profile.social_linkedin %}
+              <li>
+                <a title="LinkedIn" href="{{profile.social_linkedin}}" target="_blank"><i
+                    class="im im-linkedin"></i></a>
+              </li>
+              {% endif %}
+
+              {% if profile.social_website %}
+              <li>
+                <a title="Personal Website" href="{{profile.social_website}}" target="_blank"><i
+                    class="im im-globe"></i></a>
+              </li>
+              {% endif %}
+
+            </ul>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="column column--2of3">
+        <div class="devInfo">
+          <h3 class="devInfo__title">About Me</h3>
+          <p class="devInfo__about">{{profile.bio}}</p>
+        </div>
+        <div class="settings">
+          <h3 class="settings__title">Skills</h3>
+          <a class="tag tag--pill tag--sub settings__btn tag--lg" href=""><i
+              class="im im-plus"></i> Add Skill</a>
+        </div>
+
+        <table class="settings__table">
+          {% for skill in skills %}
+          <tr>
+            <td class="settings__tableInfo">
+              <h4>{{skill.name}}</h4>
+              <p>
+                {{skill.description}}
+              </p>
+            </td>
+            <td class="settings__tableActions">
+              <a class="tag tag--pill tag--main settings__btn" href=""><i
+                  class="im im-edit"></i> Edit</a>
+              <a class="tag tag--pill tag--main settings__btn" href="?next=/account"><i
+                  class="im im-x-mark-circle-o"></i>
+                Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+
+        <div class="settings">
+          <h3 class="settings__title">Projects</h3>
+          <a class="tag tag--pill tag--sub settings__btn tag--lg" href=""><i
+              class="im im-plus"></i> Add Project</a>
+        </div>
+
+        <table class="settings__table">
+          {% for project in projects %}
+          <tr>
+            <td class="settings__thumbnail">
+              <a href=""><img src="{{project.imageURL}}" alt="Project Thumbnail" /></a>
+            </td>
+            <td class="settings__tableInfo">
+              <a href="">{{project.title}}</a>
+              <p>{{project.description|slice:"150"}}</p>
+            </td>
+            <td class="settings__tableActions">
+              <a class="tag tag--pill tag--main settings__btn" href=""><i
+                  class="im im-edit"></i> Edit</a>
+              <a class="tag tag--pill tag--main settings__btn"
+                href="?next=/account"><i class="im im-x-mark-circle-o"></i>
+                Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

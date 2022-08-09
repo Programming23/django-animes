@@ -1,0 +1,43 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>My Page</title>
+	</head>
+	<style type="text/css">
+		th{
+			background-color: gray;
+		}
+		td,th{
+			font-size:17px;
+			padding: 6px 9px;
+			font-style:oblique;
+			text-align: center;
+			font-weight: bold;
+		}
+		td{
+			border: 1px solid black;
+		}
+		tr:nth-child(even) td{
+			background-color: gray;
+		}
+	</style>
+	<body>
+		<table  >
+			<tr >
+				<th>Anime</th>
+				<th>Episode</th>
+				<th>Date</th>
+			</tr>
+			{% for e in episodes %}
+			<tr >
+				<td>{{e.name.name|title}}</td>
+				<td>{{e.episode}}</td>
+				<td><p>{{e.publish_date}}</p></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</body>
+
+</html>

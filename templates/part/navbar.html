@@ -1,0 +1,65 @@
+
+
+<header>
+    <nav class="navbar"></nav>
+    <nav class="navbar main-navbar">
+            <button class="icon" id="button-icon-bars" onclick="showNavbarList()">  
+                <i class="fas fa-bars"></i>                    
+            </button>
+
+            <button class="icon" id="button-icon-search" onclick="showFormNavbar()">  
+                <i class="fas fa-search"></i>                    
+            </button>
+
+        <ul class="navbar-list hide-list" id="navbar-list">
+            <li><a href="{% url 'index' %}">الرئيسية</a></li>
+            <li><a href="{% url 'list_anime' %}">قائمة الأنمي</a></li>
+            <li><a href="{% url 'list_anime' %}?type=فيلم">أفلام الأنمي</a></li>
+            <li><a href="{% url 'days_anime' %}">مواعيد الحلقات</a></li>
+        </ul>
+        <div class="icons" style="position: relative;">
+            
+            {% if request.user.is_authenticated %}
+                <img style="width:40px;height: 40px;" ch="true" cl="true" src="{{user.imageURL}}" id="button-gear" onclick="ShowDropDown('dropdown-menu')" class="icon" >
+                <ul style="z-index: 3;" class="list-dropdown ds-none" id="dropdown-menu">
+                    <li><a href="{% url 'account' %}" style="font-size: 12px;" ><i class="fas fa-user"></i><span>حسابي</span></a></li>
+                    <li id="navbar-lbl-dark" onclick="changeTheme()" ><span style="font-size: 12px;"><i class="fas fa-adjust"></i><span>الوضع الليلي</span></span></li>
+                     <li><a href="{% url 'logout' %}" style="font-size: 12px;"><i class="fas fa-sign-out-alt"></i><span>تسجيل الخروج</span></a></li>
+                </ul>
+            {% else %}
+            <button class="icon" id="button-gear" onclick="ShowDropDown('dropdown-menu')">
+                <i class="fas fa-gear" id="iconGear"></i>
+            </button>
+            <ul class="list-dropdown ds-none" id="dropdown-menu">
+                
+                <li>
+                    <a href="{% url 'login' %}">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>تسجيل الدخول</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'register' %}">
+                        <i class="fas fa-plus"></i>
+                        <span>إنشاء حساب</span>
+                    </a>
+                </li>
+                <li>
+                    <span onclick="changeTheme()">
+                        <i class="fas fa-adjust"></i>
+                        <span>الوضع الليلي</span>
+                    </span>
+                </li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+    <nav class="navbar nav-mes cen-flex" id="navbar-mes">
+        <form action="" method="get" class="form-controller">
+            <input type="text" name='s' class="input-search" placeholder="بحث">
+            <button class="search-button" type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </nav>
+</header>

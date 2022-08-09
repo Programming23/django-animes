@@ -1,0 +1,151 @@
+
+.navbar, body{
+    background-color: var(--bgNavbar);
+}
+
+.navbar-list li a, .subtitle a{
+    color: var(--textColor1);
+}
+.navbar-list li a:hover{
+    color: #0c85c7;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-mes{
+    background-color: var(--BgNavBarMes);
+}
+.show-form{
+    background-color: white;
+}
+.input-search{
+    border: 1px solid #cfcdcd;
+}
+.search-button{
+    color: #5778e6;
+}
+
+.icon{
+    background: #3a3939;
+    color: white;
+}
+.title{
+    color: white;
+}
+.title-word{
+    color: #0c85c7;
+}
+
+.episode-data, .anime-data{
+    color: #d3d0d0;
+}
+.episode-data{
+    background-color: rgb(227 74 74);
+}
+.anime-data{
+    background-color: #3179f8;
+    box-shadow: inset 0px 0px 2px 1px #7d7d7d
+}
+
+.button-select{
+    color: white;
+}
+
+.footer-page{
+    color: white;
+}
+
+.footer-page > p > span{
+    color: #0c85c7;
+}
+
+.field-button{
+    color: #fff;
+    background-color: #0c85c7;
+}
+
+.light .field-button{
+    background-color: #ff847b;
+}
+
+.light .navbar{
+    background-color: var(--bgNavbarLight);
+}
+.light {
+    background: #dde9e9;
+}
+.light .navbar-list li a{
+    color: var(--textColorLight);
+}
+.light .nav-mes{
+    background-color: var(--BgNavBarMesLight);
+}
+.light .title, .light .title-word{
+    color: #f75f52;
+}
+
+.light .description-card{
+    background-color: white;
+}
+
+.subtitle2 a, .light .subtitle a{
+    color: #969696;
+}
+
+.light .footer-page {
+    background-color: #edf3f3;
+}
+.light .footer-page>p {
+    color: black;
+}
+.light .button-select, .light .list-dropdown > li>*{
+    color: #475f6b;
+}
+
+.field-input{
+    border: 1px solid #0c85c7;
+    background-color: white;
+}
+
+.multi-select-search{
+    color: white;
+}
+
+.light .multi-select-search{
+    color: black;
+}
+
+.input-number{
+    color: white;
+}
+.light .input-number{
+    color: black;
+}
+
+.light .filter{
+    background-color: white;
+}
+.light .field-input{
+    border: 1px solid #ff847b;
+}
+
+.selecteds li{
+    border: 1px solid #0c85c7;
+    color: black;
+    background-color: #0c85c7;
+}
+
+.light .selecteds li{
+    background-color: inherit;
+}
+
+.styled-checkbox + label {
+    color: white;
+}
+.light .styled-checkbox + label{
+    color: black;
+}
+
+.light .selecteds li{
+    border: 1px solid #ccc;
+    color: #7697a6;
+}

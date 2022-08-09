@@ -1,0 +1,209 @@
+
+{% extends 'base.html' %}
+
+{% block head %}
+    <meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل" />
+
+    <title>{{urlpath}}</title>
+    <meta name="description" content="يمكنكم مشاهدة قائمة افلام و انميات {{urlpath}} مترجمة اون لاين" />
+    <meta itemprop="name" content="{{urlpath}}">
+    <meta property="og:title" content="{{urlpath}}">
+    <meta property="og:url" content="https://{{domain}}{{request.path}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{urlpath}}">
+    <meta name="twitter:description" content="يمكنكم مشاهدة قائمة افلام و انميات {{urlpath}} مترجمة اون لاين">
+{% endblock head %}
+
+{% block content %}
+
+
+
+
+    <div class="main-section ">
+        <div class="container">
+            <h3 class="font-important">{{title}}</h3>
+        </div>
+    </div>
+    <!-- END MAIN SECTION -->    <!-- FILTER SECTION -->
+
+{% if ul_hide != 'hide' %}
+
+<div class="second-section">
+    <div class="container">
+        <div class="anime-filter-options">
+            <ul>
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="genresDropdown"
+                                data-toggle="dropdown" aria-expanded="true" >
+                            تصنيف الأنمي <span class="caret"></span>
+                        </button>
+
+                            <ul class="dropdown-menu scrollable-menu" id="drop1" role="menu" aria-labelledby="genresDropdown">
+                                    {% for class in anime_class  %}
+                                        <li role="presentation">
+                                            <a  href="{% url 'ht' name='anime-genre' slug=class.url_anime%}">{{class.name}}</a>
+                                        </li>
+                                    {% endfor %}
+
+
+                            </ul>
+
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="statusDropdown"
+                                data-toggle="dropdown" aria-expanded="true" >
+                            حالة الأنمي <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu scrollable-menu" id="drop2" role="menu" aria-labelledby="statusDropdown">
+
+                                {% for state in anime_state  %}
+                                    <li role="presentation">
+                                    <a href="{% url 'ht' name='anime-state' slug=state.url_anime %}">{{state}}</a>
+                                </li>
+                                {% endfor %}
+
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="typeDropdown"
+                                data-toggle="dropdown" aria-expanded="true" >
+                            النوع <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu scrollable-menu" id="drop3" role="menu" aria-labelledby="typeDropdown">
+
+                            {% for type in anime_type  %}
+                            <li role="presentation">
+                                    <a href="{% url 'ht' name='anime-type' slug=type.url_anime %}">{{type}}</a>
+                                </li>
+                            {% endfor %}
+
+
+                                                    </ul>
+                    </div>
+                </li>
+
+
+
+                <li>
+                    <div class="dropdown" >
+                        <button class="btn btn-default dropdown-toggle" type="button" id="seasonsDropdown"
+                                data-toggle="dropdown" aria-expanded="true">
+                            الموسم <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu scrollable-menu" role="menu" id="drop4" aria-labelledby="seasonsDropdown">
+
+                                {% for date in anime_date  %}
+                                    <li>
+                                        <a href="{% url 'ht' name='anime-season' slug=date.name%}">{{date.name}}</a>
+                                    </li>
+                                {% endfor %}
+
+
+                         </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+<!-- END FILTER SECTION -->    <div class="space"></div>
+    <div class="container">
+        <div class="anime-list-content">
+                            <div class="row display-flex">
+
+<!-- start card  -->
+
+{% for i in page  %}
+
+<div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 col-no-padding col-mobile-no-padding">
+     <div class="anime-card-container">
+         <div class="anime-card-poster" style="height:250px">
+            <div class="hover ">
+                <img class="img-responsive"
+                    style="height:250px"
+                     src="{{i.image_anime.url}}"
+                     alt="{{i.title}}" />
+                <a href="{% url 'anime' slug=i.url_anime %}" class="overlay"></a>
+                 <div class="play-button-extra">
+                        <span ><a href="{% url 'anime' slug=i.url_anime %}" class="overlay"></a></span>
+
+                        </div>
+                    </div>
+                    <div class="anime-card-status "><a class='font-important'
+                        style='font-size:11px'  href="{% url 'ht' name='anime-state' slug=i.anime_state.name %}">{{i.anime_state.name}}</a>
+                    </div>
+                    </div>
+                    <div class="anime-card-details">
+
+                        <div class="anime-card-title" title="{{i.title}}" data-toggle="popover" data-trigger="hover"
+                            >
+                            <h3 ><a href="{% url 'anime' slug=i.url_anime %}" >{{i.title}}</a></h3>
+                            <h4><a a style="color:#969696;" href="{% url 'ht' name='anime-season' slug=i.anime_date.name %}">{{i.anime_date.name}}</a></h4>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+</div>
+    </div>
+            <nav>
+                {% if page.paginator.num_pages > 1 %}
+
+                    <ul class="pagination">
+                                {% if page.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% if search == 'show' %}s={{search_text}}&{% endif %}page={{page.previous_page_number}}">&laquo;&nbsp;السابق</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link">&laquo;&nbsp;السابق</span>
+                                    </li>
+                                {% endif %}
+
+                                {% for i in page.range %}
+                                    {% if i == page.number %}
+                                        <li class="page-item active">
+                                            <span class="page-link">{{i}}</span>
+                                        </li>
+                                    {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% if search == 'show' %}s={{search_text}}&{% endif %}page={{i}}">{{i}}</a>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page.has_next %}
+                                    <li class="page-item ">
+                                        <a class="page-link" href="?{% if search == 'show' %}s={{search_text}}&{% endif %}page={{page.next_page_number}}">التالي&nbsp;&raquo;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <span class="page-link" >التالي&nbsp;&raquo;</a>
+                                    </li>
+                                {% endif %}
+                        </ul>
+
+                {% endif %}
+
+    </nav>
+
+    </div>
+
+
+{% endblock content %}
+
+
+
+
+
+

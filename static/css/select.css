@@ -1,0 +1,148 @@
+.field-input{
+    min-height: 45px;
+    width: 100%;
+    background-color: inherit;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    outline: none;
+    padding: 10px;
+}
+
+
+
+.input-number{
+    font-family: var(--Cairo);
+    font-size: 14px;
+    height: 45px;
+    direction: ltr;
+}
+
+select{
+    display: none;
+    width: 0;
+    height: 0;
+}
+.selecteds{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    padding: 3px;
+    direction: rtl;
+    width: 100%;
+}
+.selecteds li{
+    position: relative;
+    font-family: Cairo, sans-serif;
+    padding:5px 15px 5px 10px;
+    text-align: left;
+    font-size: 11px;
+}
+.selecteds li i{
+    position: absolute;
+    right: 4px;
+    top: 10px;
+}
+.multi-select-search{
+    border: none;
+    outline: none;
+    background-color: inherit;
+    font-size: 13px;
+    font-family: Cairo,sans-serif ;
+    letter-spacing: 0.7px;
+    order: 100000;
+    width: 120px;
+    direction: ltr;
+}
+.list-select{
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
+
+
+.item-select{
+    width: 100%;
+    padding: 5px 15px 5px 10px;
+    background-color: white;
+    color: #33444d;
+    font-family: Cairo, sans-serif;
+    font-size: 13px;
+}
+.active-option{
+    background-color: #eee;
+}
+
+.styled-checkbox {
+    position: absolute;
+    opacity: 0;
+}
+.styled-checkbox + label {
+    position: relative;
+    cursor: pointer;
+    padding: 0 30px 0 15px;
+    font-family: var(--Cairo);
+    font-size: 12px;
+}
+.styled-checkbox + label:before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background: white;
+    border: 1px solid #f35429;
+    position: absolute;
+    top: 3px;
+    right: 0;
+}
+.styled-checkbox:hover + label:before {
+    background: #f35429;
+}
+.styled-checkbox:focus + label:before {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+.styled-checkbox:checked + label:before {
+    background: #f35429;
+}
+.styled-checkbox:disabled + label {
+    color: #b8b8b8;
+    cursor: auto;
+}
+.styled-checkbox:disabled + label:before {
+    box-shadow: none;
+    background: #ddd;
+}
+.styled-checkbox:checked + label:after {
+    content: "";
+    position: absolute;
+    right: 13px;
+    top: 11px;
+    width: 2px;
+    height: 2px;
+    box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+    transform: rotate(45deg);
+}
+
+
+
+
+.unstyled {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    gap: 5px;
+}
+
+.unstyled li {
+    margin: 20px 0;
+}
+

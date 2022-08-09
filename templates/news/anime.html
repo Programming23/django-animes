@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block head %}
+    <meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل" />
+   <link rel="stylesheet" href="https://cdn.iconmonstr.com/1.3.0/css/iconmonstr-iconic-font.min.css" />
+    <title>جميع حلقات انمي {{title}} مترجمة اون لاين</title>
+    <meta name="description" content="{{anime.story}}" />
+    <meta itemprop="name" content="جميع حلقات انمي {{title}} مترجمة اون لاين">
+    <meta property="og:title" content="جميع حلقات انمي {{title}} مترجمة اون لاين">
+    <meta property="og:url" content="https://{{domain}}{{request.path}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="جميع حلقات انمي {{title}} مترجمة اون لاين">
+    <meta name="twitter:description" content="{{anime.story}}">
+
+{% endblock head %}
+
+
+{% block content %}
+
+
+    <div class="container" align="">
+        <div class="row mb-5" >
+            <div class="col-1">
+                    <img class="anime-image" src="{{anime.image_anime.url}}" draggable="false" alt="">
+                
+
+                <div style="position: relative;width: 100%;" >
+
+                    {% if request.user.is_authenticated %}
+                    <button onclick="ShowDropDown('dropdown-list-add')" class="cta-btns" id='btn-dropdown-list' >
+                        <i class="fas fa-plus"></i>
+                        إضافة لقائمتي
+                    </button>
+                    <ul  class="list-dropdown ds-none ds-none" id="dropdown-list-add">
+                        <li id="done" style="{{class_done}}" url="{% url 'done_show_add' name=anime.url_anime %}">
+                            <span style="font-size: 12px;" >
+                                <i class="fas fa-check"></i><span> تم مشاهدتها</span>
+                            </span>
+                        </li>
+
+                        <li id="want" style="{{class_want}}" url="{% url 'want_show_add' name=anime.url_anime %}"><span style="font-size: 12px;" ><i class="fas fa-bookmark"></i><span> أرغب بمشاهدتها</span></span></li>
+                        <li id="watching" style="{{class_now}}" url="{% url 'watching_add' name=anime.url_anime %}"><span  style="font-size: 12px;" ><i class="fas fa-play"></i><span> أشاهدها حاليا</span></span></li>
+                        <li id="later" style="{{class_later}}" url="{% url 'later_add' name=anime.url_anime %}"><span  style="font-size: 12px;" ><i class="fas fa-pause"></i><span> سأكملها لاحقاً</span></span></li>
+                        <li id="dropped" style="{{class_dont}}" url="{% url 'dropped_add' name=anime.url_anime %}"><span  style="font-size: 12px;" ><i class="fas fa-stop"></i><span> لا أرغب بمشاهدتها</span></span></li>
+
+                        <div id="delete-from-list" style="{{close}}"  class="dropdown-menu-bottom cen-flex" url="{% url 'delete_from_list' name=anime.url_anime %}" style="display: none;" url="{% url 'want_show_add' name=anime.url_anime %}"><span  ><i class="fas fa-close mark-right"></i><span> إزالة من قائمتي </span></span></div>
+                    </ul>
+                    {% else %}
+                    <a href="{% url 'login' %}">
+                    <button  class="cta-btns">
+                        <i class="fas fa-plus"></i>
+                        إضافة لقائمتي
+                    </button>
+                    </a>
+                    {% endif %}
+                </div>
+
+                {% if request.user.is_authenticated %}
+                <button  class="cta-btns" style="{{class_fav}}" url="{% url 'animes_favorite_check' name=anime.url_anime %}"  id='btn-fav' >
+                    {% if class_fav == '' %}
+                        <i class="fas fa-plus"></i>
+                        إضافة لأنمياتي المفضلة
+                    {% else %}
+                    تمت الإضافة لأنمياتي المفضلة
+                    {% endif %}
+                </button>
+                {% else %}
+                <a href="{% url 'login' %}" style="width: 100%;">
+                    <button  class="cta-btns cairo">
+                        <i class="fas fa-plus"></i>
+                        إضافة لأنمياتي المفضلة
+                    </button>
+                </a>
+                {% endif %}
+            </div>
+            <div class="col-2">
+                <div class="col-sm-12 anime-name"><h3>{{anime.name}}</h3></div>
+                <div class="col-sm-12 anime-genre ">
+                    {% for i in class  %}
+                        <a href="{% url 'list_anime' %}?genre={{i.url}}" class="a-hover">{{i.name}}</a>
+                    {% endfor %}
+                </div>
+                <div id='story' class="col-sm-12 anime-story">{{anime.story| striptags | safe | escape}}</div>
+
+                <div class="col-sm-12 anime-name"><h3>معلومات الأنمي</h3></div>
+                <div class="col-sm-12 anime-info">
+                    <div><span class="head cen-flex">عدد الحلقات</span> <span class="info a-hover cen-flex">{{anime.number_episodes}}</span></div>
+                    <div><span class="head cen-flex">النوع</span> <a style="color: #097691;" href="{% url 'list_anime' %}?type={{anime.anime_type.url}}" class="info a-hover cen-flex">{% if anime.anime_type.name == 'تلفزيون' %}TV{% else %}{{anime.anime_type.name}}{% endif %}</a></div>
+                    <div><span class="head cen-flex">حالة الأنمي</span> <a href="{% url 'list_anime' %}?state={{anime.anime_state.url}}" style="color: #097691;"class="info a-hover cen-flex ">{{anime.anime_state.name}}</a></div>
+                    <div><span class="head cen-flex">موسم الأنمي</span> <a href="{% url 'list_anime' %}?season={{anime.anime_date.name}}" style="color: #097691;"class="info a-hover cen-flex ">{{anime.anime_date.name}}</a></div>
+                {% if anime.anime_state.name == 'مستمر' %}
+                    <div><span class="head cen-flex">موعد عرض الحلقة</span>
+                    {% if anime.anime_days.name != 'غير معروف' %}
+                     <a href="{% url 'days_anime' %}#{{anime.anime_days.name}}" class="info a-hover cen-flex">{{anime.anime_days.name}}</a></div>
+                     {% else %}
+                     <span class="info a-hover cen-flex">{{anime.anime_days.name}}</span></div>
+                    {% endif %}
+                {% endif %}
+                </div>
+
+
+                <div class="col-sm-12 anime-name"><h3>إحصائيات الأنمي</h3></div>
+                <div class="col-sm-12 anime-info">
+                    <div><span class="head cen-flex">أنمياتي المفضلة</span> <span class="info a-hover cen-flex">{{anime.fav_count}}</span></div>
+                    <div><span class="head cen-flex">أرغب بمشاهدتها</span> <span style="color: #097691;"  class="info a-hover cen-flex">{{anime.want_show}}</span></div>
+                    <div><span class="head cen-flex">تم مشاهدتها</span> <span  style="color: #097691;"class="info a-hover cen-flex ">{{anime.done_show}}</span></div>
+                    <div><span class="head cen-flex">أشاهدها حاليا</span> <span  style="color: #097691;"class="info a-hover cen-flex ">{{anime.now_show}}</span></div>
+                    <div><span class="head cen-flex">سأكملها لاحقاً</span> <span  style="color: #097691;"class="info a-hover cen-flex ">{{anime.later_show}}</span></div>
+                    <div><span class="head cen-flex">لا أرغب بمشاهدتها</span> <span  style="color: #097691;"class="info a-hover cen-flex ">{{anime.dont_show}}</span></div>
+                </div>
+            </div>
+            <input type="text" class="inputEpisodeProfile" id="inputEpisodeProfile" onkeyup="EpisodesSearch()" placeholder="البحث عن حلقة" />
+            <div class="anime-episodes">
+                {% for episode in episodes %}
+                <a href="{% url 'watch' name=episode.name.url_anime typ=episode.name.anime_type.type_url episode=episode.episode  %}" class="eps_number cen-flex a-hover">{{episode.name.anime_type.type}}&nbsp;<span class="nmb">{{episode.episode}}</span></a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+{% block script %}
+<script>wstory()</script>
+{% if request.user.is_authenticated %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/ajax/add_to_list.js' %}"></script>
+
+{% endif %}
+{% endblock script %}
+
+
+

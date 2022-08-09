@@ -1,0 +1,89 @@
+
+
+@media screen and (max-width: 1418px){
+    
+    .items{
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+@media screen and (max-width: 928px){
+    .main-navbar{
+        height: auto;
+    }
+    .title-header {
+        height: 50px;
+        border-bottom: 1.5px solid #303030;
+    }
+    .header-episode,
+    .content-episode {
+        display: block;
+    }
+    .title-header,
+    .servers-episode,
+    .episodes,
+    .episode-video {
+        width: 100%;
+    }
+    
+    .navbar-list{
+        display: block;
+        height: auto;
+        margin-top: 45px;
+        width: 100%;
+    }
+    .navbar-list li{
+        padding: 15px 20px;
+    }
+    
+    .hide-list{
+        display: none;
+    }
+    #button-icon-bars{
+        display: block;
+    }
+    #button-icon-search{
+        right: 80px;
+    }
+    .col-1, .col-2 { flex: 0 0 auto; width: 100%; margin: 0; }
+}
+
+@media screen and (max-width:788px){
+    .episode-video {
+        height: 400px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    :root{
+        --PaddingItems: 40px 0px;
+        --widthCard: calc(50% - 15px);
+        --heightImage: calc(var(--widthCard)*1.3px);
+    }
+    .container{
+        padding: 30px 10px;
+    }
+    .items{
+        width: 100%;
+    }
+    .subtitle a, .subtitle2 a{
+        font-size: 13px;
+    }
+    .item-right-data{
+        padding: 5px;
+    }
+    .anime-name{font-size: 13px;}
+    .profile{width: 100%;}
+    .footer-page {
+        row-gap: 5px;
+        flex-direction: column;
+    }
+    .episode-video {
+        height: 300px;
+    }
+}
+
+@media screen and (max-width:300px){
+    .anime-image { width: 100%; height: 220px; }
+}

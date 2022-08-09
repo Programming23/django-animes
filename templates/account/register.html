@@ -1,0 +1,68 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block head %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="hamza-animes, hamza-animes.herokuapp,AnimeLek,Anime 2020, Anime4up, Okanime,انمي,انمي ليك الجديد,انمي ليك,Anime Lek,الانمي,مشاهدة,تحميل,مسلسلات,افلام,افلام انمي,New AnimeLek,Okanime,Animelek,Ahiru no Sora مترجم,Nanatsu No Taizai,Boku no Hero Academia,Haikyuu!!,جميع المواسم أنمي هايكيوا,أنمي One Piece/ون بيس مترجم,جميع المواسم أنمي  Shokugeki no Souma مترجم,انمي Dragon Ball Super/دراغون بول سوبر مترجم,BLACK CLOVER مترجم,جميع المواسم  الانمي بوكيمون Pokemon مترجم,جميع مواسم الانميKingdom مترجم,انمي Kaguya-sama wa Kokurasetai مترجم,انمي Vinland Saga مترجم,مترجمة اون لاين وتحميل" />
+
+    <title>{{title_tag}}</title>
+    <meta name="description" content="{{title_tag}}" />
+    <meta itemprop="name" content="{{title_tag}} ">
+    <meta property="og:title" content="{{title_tag}} ">
+    <meta property="og:url" content="https://{{domain}}{{request.path}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{title_tag}} ">
+    <meta name="twitter:description" content="{{title_tag}}">
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'files/css/style.css' %}">
+    <link href="{% static 'css/account.css' %}" rel="stylesheet" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% endblock head %}
+
+
+    {% block content %}
+    
+    <div class='my-container'>
+        {% if message %}
+            <div class="my-form-message">
+            {{message}}
+            </div>
+        {% endif %}
+        <div class="my-form-container ">
+            <div class="nav-login">
+                <h4 class="">إنشاء حساب</h4>
+            </div>
+            <form action="" method="post" class='my-form border-bottom '>
+                {% csrf_token %}
+                {% if error != None %}
+                    <div class="error">{{error}}</div>
+                {% endif %}
+                <div id="div_id_username" class="form-group"> 
+                    <label for="id_username" class=" requiredField">
+                    اسم المستخدم <span class="asteriskField"></span> </label> <div class=""> <input type="text" name="username" maxlength="30" class="textinput textInput form-control" required id="id_username" value='{{user_value}}' > <small id="hint_id_username" class="form-text text-muted">اسم المستخدم يجب ألا يحتوي على مسافات</small> </div> </div> <div id="div_id_email" class="form-group"> <label for="id_email" class=" requiredField">
+                    البريد الالكتروني <span class="asteriskField"></span> </label> <div class=""> <input type="email" name="email" class="emailinput form-control" value='{{email_value}}' required id="id_email">
+                    <small id="hint_id_username" class="form-text text-muted">البريد الالكتروني يجب أن يكون أكثر من 15 حرف</small> </div> </div> <div id="div_id_password1" class="form-group"> <label for="id_password1" class=" requiredField">
+                    كلمة المرور <span class="asteriskField"></span> </label> <div class=""> <input type="password" name="password1" minlength="8" class="textinput textInput form-control" value='{{pass1_value}}' maxlength="30" required id="id_password1"> </div> </div> <div id="div_id_password2" class="form-group"> <label for="id_password2" class=" requiredField">
+                    تأكيد كلمة المرور <span class="asteriskField"></span> </label> <div class=""> <input type="password" name="password2" minlength="8" class="textinput textInput form-control" value='{{pass2_value}}' maxlength="30" required id="id_password2"> </div> </div>
+                   
+                   <div class="form-group"> 
+                    <div id="div_id_terms" class="form-check"> 
+                        <input type="checkbox" name="terms" class="checkboxinput form-check-input" required id="id_terms"> 
+                        <label for="id_terms" class="form-check-label requiredField">
+                    I agree to the terms of use and privacy policy<span class="asteriskField"></span> </label> </div> </div>
+
+                <div class="my-form-div"><input type="submit" value="save" class="my-form-btn-login"></div>
+            </form>
+        </div>
+        <div class="my-form-message">
+            إذا كان لديك حساب مسبقا فقم ب  <a href="{% url 'login' %}">تسجيل الدخول</a>
+        </div>
+
+    </div>
+{% endblock content %}
+    
+    

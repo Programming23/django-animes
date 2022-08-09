@@ -1,0 +1,26 @@
+
+.profile-image, .profile-image img{
+    width: 19rem;
+    height: 19rem;
+    margin-right: calc(50% - 9.5rem) !important; 
+    border: 1px solid #5aa5b9;
+    border-radius: 50%;
+}
+.anime-container-infos{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 2px;
+    padding: 3rem 18rem !important;
+}
+.dev__social{
+    display: flex;
+    column-gap: 15px;
+    justify-content: center;
+    margin-top: 8px; 
+}
+.profile-user-name{
+    font-size: 25px;
+    display: flex;
+    justify-content: center; 
+}
